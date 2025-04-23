@@ -96,15 +96,17 @@ class _RecorderPageState extends State<RecorderPage> {
                 width: MediaQuery.of(context).size.width * 0.4,
                 child: HtmlElementView(viewType: 'preview-video'),
               ),
-              SizedBox(width: 10),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.black),
-                    borderRadius: BorderRadius.circular(8)),
-                width: MediaQuery.of(context).size.width * 0.4,
-                height: (MediaQuery.of(context).size.width * 0.4) * 9 / 16,
-                child: HtmlElementView(viewType: 'camera-preview'),
-              ),
+              if (selectedType == 'both') ...[
+                SizedBox(width: 10),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(8)),
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  height: (MediaQuery.of(context).size.width * 0.4) * 9 / 16,
+                  child: HtmlElementView(viewType: 'camera-preview'),
+                ),
+              ],
             ]),
             DropdownButton<String>(
               value: selectedType,
@@ -139,7 +141,7 @@ class _RecorderPageState extends State<RecorderPage> {
             ElevatedButton(
               onPressed: () {
                 if (activeStream != null) {
-                  startNativeRecording(activeStream!);
+                  startNativeRecording(activeStream!, selectedType);
                 }
               },
               child: Text('Start Recording'),
